@@ -1,0 +1,2 @@
+recursive-include tutorazure_blob/patches *
+recursive-include tutorazure_blob/templates *
