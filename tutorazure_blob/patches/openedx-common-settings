@@ -1,0 +1,11 @@
+# Azure Blob Storage Configuration
+{% if RUN_AZURE_STORAGE %}
+AZURE_ACCOUNT_NAME = "{{ AZURE_ACCOUNT_NAME }}"
+AZURE_ACCOUNT_KEY = "{{ AZURE_ACCOUNT_KEY }}"
+AZURE_CONNECTION_STRING = "{{ AZURE_CONNECTION_STRING }}"
+AZURE_CONTAINER_NAME = "{{ AZURE_CONTAINER_NAME }}"
+AZURE_CUSTOM_DOMAIN = "{{ AZURE_CUSTOM_DOMAIN }}"
+
+# Use Azure Blob Storage as default file storage
+DEFAULT_FILE_STORAGE = "azure_storage_backend.AzureBlobStorage"
+{% endif %}
