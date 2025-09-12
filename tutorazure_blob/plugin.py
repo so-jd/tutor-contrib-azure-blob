@@ -30,16 +30,18 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items([
 
 
 ########################################
-# TEMPLATE RENDERING
+# BUILD CONTEXT
 ########################################
 
-tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_items([
-    str(importlib_resources.files("tutorazure_blob") / "templates"),
-])
-
-tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_items([
-    ("azure-blob/build", "plugins"),
-])
+# Add the Azure storage backend file to the openedx build context
+@tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()  
+def azure_storage_build_mounts(mounts, host_path):
+    backend_file_path = os.path.join(
+        str(importlib_resources.files("tutorazure_blob")),
+        "azure_storage_backend.py"
+    )
+    mounts.append((backend_file_path, "/tmp/azure_storage_backend.py"))
+    return mounts
 
 
 ########################################
