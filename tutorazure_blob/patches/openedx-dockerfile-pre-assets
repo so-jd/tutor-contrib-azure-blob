@@ -1,5 +1,5 @@
 {% if RUN_AZURE_STORAGE %}
 # Install Azure storage dependencies
 RUN pip install azure-storage-blob==12.19.0
-COPY ./plugins/azure-blob/build/openedx/azure_storage_backend.py /openedx/edx-platform/
+COPY --from=plugins ./azure-blob/build/openedx/azure_storage_backend.py /openedx/edx-platform/
 {% endif %}
