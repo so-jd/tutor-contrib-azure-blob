@@ -1,11 +1,52 @@
 # Azure Blob Storage Configuration
 {% if RUN_AZURE_STORAGE %}
+# Azure storage settings for django-storages
 AZURE_ACCOUNT_NAME = "{{ AZURE_ACCOUNT_NAME }}"
 AZURE_ACCOUNT_KEY = "{{ AZURE_ACCOUNT_KEY }}"
-AZURE_CONNECTION_STRING = "{{ AZURE_CONNECTION_STRING }}"
-AZURE_CONTAINER_NAME = "{{ AZURE_CONTAINER_NAME }}"
-AZURE_CUSTOM_DOMAIN = "{{ AZURE_CUSTOM_DOMAIN }}"
+AZURE_CONTAINER = "{{ AZURE_CONTAINER_NAME }}"
 
-# Use Azure Blob Storage as default file storage
-DEFAULT_FILE_STORAGE = "azure_storage_backend.AzureBlobStorage"
+{% if AZURE_CONNECTION_STRING %}
+AZURE_CONNECTION_STRING = "{{ AZURE_CONNECTION_STRING }}"
+{% endif %}
+
+{% if AZURE_CUSTOM_DOMAIN %}
+AZURE_CUSTOM_DOMAIN = "{{ AZURE_CUSTOM_DOMAIN }}"
+{% endif %}
+
+# Legacy Django storage settings (for compatibility)
+DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
+
+# Modern Django 4.2+ STORAGES setting (if supported)
+if "STORAGES" in globals():
+    STORAGES = STORAGES or {}
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "account_name": "{{ AZURE_ACCOUNT_NAME }}",
+            "account_key": "{{ AZURE_ACCOUNT_KEY }}",
+            "azure_container": "{{ AZURE_CONTAINER_NAME }}",
+{% if AZURE_CONNECTION_STRING %}
+            "connection_string": "{{ AZURE_CONNECTION_STRING }}",
+{% endif %}
+{% if AZURE_CUSTOM_DOMAIN %}
+            "custom_domain": "{{ AZURE_CUSTOM_DOMAIN }}",
+{% endif %}
+        },
+    }
+
+# Configure existing Open edX storage settings for Azure
+if "VIDEO_IMAGE_SETTINGS" in globals():
+    VIDEO_IMAGE_SETTINGS["STORAGE_KWARGS"]["location"] = VIDEO_IMAGE_SETTINGS["STORAGE_KWARGS"]["location"].lstrip("/")
+
+if "VIDEO_TRANSCRIPTS_SETTINGS" in globals():
+    VIDEO_TRANSCRIPTS_SETTINGS["STORAGE_KWARGS"]["location"] = VIDEO_TRANSCRIPTS_SETTINGS["STORAGE_KWARGS"]["location"].lstrip("/")
+
+if "GRADES_DOWNLOAD" in globals():
+    GRADES_DOWNLOAD["STORAGE_KWARGS"] = {"location": GRADES_DOWNLOAD["STORAGE_KWARGS"]["location"].lstrip("/")}
+
+if "OPENEDX_LEARNING" in globals():
+    OPENEDX_LEARNING["MEDIA"]["BACKEND"] = DEFAULT_FILE_STORAGE
+    OPENEDX_LEARNING["MEDIA"]["OPTIONS"] = {
+        'azure_container': "{{ AZURE_CONTAINER_NAME }}",
+    }
 {% endif %}

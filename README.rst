@@ -1,16 +1,15 @@
 Azure Blob Storage plugin for `Tutor <https://docs.tutor.edly.io>`__
 #########################################################################
 
-Store Open edX assets on Azure Blob Storage
+Store Open edX assets on Azure Blob Storage using django-storages
 
 Features
 ********
 
-- Direct integration with Azure Blob Storage
-- Custom django-storages backend
-- Support for both account key and connection string authentication
+- Uses official django-storages Azure backend
+- Support for both account key and connection string authentication  
 - Custom domain support for CDN integration
-- Automatic container creation
+- Well-maintained and battle-tested storage solution
 
 Installation
 ************

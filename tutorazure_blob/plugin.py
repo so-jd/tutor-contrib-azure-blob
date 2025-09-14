@@ -29,7 +29,7 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items([
 # No custom images needed for Azure Blob Storage
 
 
-# Build context handled via Dockerfile patch
+# No build context needed - using django-storages
 
 
 ########################################
