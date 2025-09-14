@@ -29,19 +29,7 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items([
 # No custom images needed for Azure Blob Storage
 
 
-########################################
-# TEMPLATE RENDERING
-########################################
-
-# Add template root for azure-blob plugin
-tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
-    str(importlib_resources.files("tutorazure_blob") / "templates")
-)
-
-# Render azure-blob templates to plugins directory
-tutor_hooks.Filters.ENV_TEMPLATE_TARGETS.add_item(
-    ("azure-blob/build", "plugins")
-)
+# Build context handled via Dockerfile patch
 
 
 ########################################
