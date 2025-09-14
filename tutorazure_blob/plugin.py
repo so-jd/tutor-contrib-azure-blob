@@ -29,19 +29,7 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items([
 # No custom images needed for Azure Blob Storage
 
 
-########################################
-# BUILD CONTEXT
-########################################
-
-# Add the Azure storage backend file to the openedx build context
-@tutor_hooks.Filters.IMAGES_BUILD_MOUNTS.add()  
-def azure_storage_build_mounts(mounts, host_path):
-    backend_file_path = os.path.join(
-        str(importlib_resources.files("tutorazure_blob")),
-        "azure_storage_backend.py"
-    )
-    mounts.append((backend_file_path, "/tmp/azure_storage_backend.py"))
-    return mounts
+# Build context handled via Dockerfile patch
 
 
 ########################################
