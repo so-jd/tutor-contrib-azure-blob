@@ -32,7 +32,7 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items([
 # and then add it to the MY_INIT_TASKS list. Each task is in the format:
 # ("<service>", ("<path>", "<to>", "<script>", "<template>"))
 MY_INIT_TASKS: list[tuple[str, tuple[str, ...]]] = [
-    ("azure-blob", ("azure-blob", "tasks", "azure-blob", "init.sh")),
+    ("lms", ("azure-blob", "tasks", "azure-blob", "init.sh")),
 ]
 
 
