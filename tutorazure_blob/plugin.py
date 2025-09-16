@@ -23,7 +23,30 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_items([
 # No unique configs needed for Azure Blob Storage
 
 
-# No initialization tasks needed for Azure Blob Storage
+########################################
+# INITIALIZATION TASKS
+########################################
+
+# To add a custom initialization task, create a bash script template under:
+# {{ cookiecutter.module_name }}/templates/{{ cookiecutter.plugin_name }}/tasks/
+# and then add it to the MY_INIT_TASKS list. Each task is in the format:
+# ("<service>", ("<path>", "<to>", "<script>", "<template>"))
+MY_INIT_TASKS: list[tuple[str, tuple[str, ...]]] = [
+    ("azure-blob", ("azure-blob", "tasks", "azure-blob", "init.sh")),
+]
+
+
+# For each task added to MY_INIT_TASKS, we load the task template
+# and add it to the CLI_DO_INIT_TASKS filter, which tells Tutor to
+# run it as part of the `init` job.
+for service, template_path in MY_INIT_TASKS:
+    full_path: str = str(
+        importlib_resources.files("tutorazure_blob")
+        / os.path.join("templates", *template_path)
+    )
+    with open(full_path, encoding="utf-8") as init_task_file:
+        init_task: str = init_task_file.read()
+    tutor_hooks.Filters.CLI_DO_INIT_TASKS.add_item((service, init_task))
 
 
 # No custom images needed for Azure Blob Storage
