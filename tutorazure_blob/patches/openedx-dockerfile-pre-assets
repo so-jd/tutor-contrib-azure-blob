@@ -1,4 +1,5 @@
 {% if RUN_AZURE_STORAGE %}
 # Install django-storages with Azure support
 RUN pip install django-storages[azure]
+RUN pip install azure-cli
 {% endif %}
