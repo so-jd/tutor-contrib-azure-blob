@@ -3,15 +3,21 @@ set -e
 
 echo "Initializing Azure Blob Storage..."
 
+# Get configuration from Tutor variables
+AZURE_CONTAINER_NAME="{{ AZURE_CONTAINER_NAME }}"
+AZURE_CONNECTION_STRING="{{ AZURE_CONNECTION_STRING }}"
+AZURE_ACCOUNT_NAME="{{ AZURE_ACCOUNT_NAME }}"
+AZURE_ACCOUNT_KEY="{{ AZURE_ACCOUNT_KEY }}"
+
 # Check if Azure CLI is available
 if ! command -v az &> /dev/null; then
     echo "Azure CLI not found. Installing azure-cli..."
     pip install azure-cli
 fi
 
-# Check required environment variables
+# Check required configuration
 if [[ -z "${AZURE_CONTAINER_NAME}" ]]; then
-    echo "Error: AZURE_CONTAINER_NAME environment variable is required"
+    echo "Error: AZURE_CONTAINER_NAME is required"
     exit 1
 fi
 
