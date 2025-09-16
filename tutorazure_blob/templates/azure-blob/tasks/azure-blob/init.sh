@@ -37,16 +37,16 @@ if az storage container exists \
     --account-name "${ACCOUNT_NAME}" \
     --account-key "${ACCOUNT_KEY}" \
     --output tsv 2>/dev/null | grep -q "True"; then
-    echo "✅ Container '${AZURE_CONTAINER_NAME}' already exists"
+    echo "Container '${AZURE_CONTAINER_NAME}' already exists"
 else
-    echo "📦 Creating container '${AZURE_CONTAINER_NAME}'..."
+    echo "Creating container '${AZURE_CONTAINER_NAME}'..."
     az storage container create \
         --name "${AZURE_CONTAINER_NAME}" \
         --account-name "${ACCOUNT_NAME}" \
         --account-key "${ACCOUNT_KEY}" \
         --public-access off \
         --output none
-    echo "✅ Container '${AZURE_CONTAINER_NAME}' created successfully"
+    echo "Container '${AZURE_CONTAINER_NAME}' created successfully"
 fi
 
 echo "Azure Blob Storage initialization completed"
